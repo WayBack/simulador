@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simulador - Way Back</title>
+<link rel="stylesheet" type="text/css" href="css/af.ui.css" />
+<link rel="stylesheet" type="text/css" href="css/icons.css" />
+<!-- <script src="http://cdn.app-framework-software.intel.com/2.1/appframework.ui.min.js"></script> -->
+
+<script src="appframework.ui.min.js"></script>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              
+      <link rel="stylesheet" type="text/css" href="css/main.css"  />
+      
+      <link rel="stylesheet" type="text/css" href="css/lists.css"  />
+      <link rel="stylesheet" type="text/css" href="css/forms.css"  />
+      <link rel="stylesheet" type="text/css" href="css/buttons.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/badges.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/grid.css"  />
+
+      <link rel="stylesheet" type="text/css" href="css/android.css"  />
+      <link rel="stylesheet" type="text/css" href="css/win8.css"  />
+      <link rel="stylesheet" type="text/css" href="css/bb.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
+      <link rel="stylesheet" type="text/css" href="css/tizen.css"  />
+        
+      <link rel="stylesheet" type="text/css" href="css/af.actionsheet.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.popup.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.scroller.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.selectBox.css"  />  
+        
+        
+        <!-- uncomment for intel.xdk apps 
+        <script type="text/javascript" charset="utf-8" src="intelxdk.js"></script>
+        <script type="text/javascript" charset="utf-8" src="xhr.js"></script>
+        -->
+       
+        <!-- include af.desktopBrowsers.js on desktop browsers only -->
+        <script>
+
+            function loadedPanel(what) {
+                //We are going to set the badge as the number of li elements inside the target
+                $.ui.updateBadge("#aflink", $("#af").find("li").length);
+            }
+
+
+            function unloadedPanel(what) {
+                console.log("unloaded " + what.id);
+            }
+
+            if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+                var script = document.createElement("script");
+                script.src = "css/af.desktopBrowsers.js";
+                var tag = $("head").append(script);
+                //$.os.desktop=true;
+            }
+
+          //  $.feat.nativeTouchScroll=true;
+          
+        </script>        
+        <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
+        <script type="text/javascript" charset="utf-8" src="css/af.scroller.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.selectBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.touchEvents.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.touchLayer.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.popup.js"></script>
+
+      
+        <script type="text/javascript" charset="utf-8" src="css/transitions/fade.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/flip.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/pop.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slide.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slideDown.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slideUp.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.slidemenu.js"></script>
+        -->
+
+        <script type="text/javascript">
+            /* This function runs once the page is loaded, but intel.xdk is not yet active */
+            //$.ui.animateHeaders=false;
+             var search=document.location.search.toLowerCase().replace("?","");
+             //if(!search)
+            $.ui.useOSThemes=true;
+            if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
+            {
+
+               $.ui.useOSThemes=true;
+                if(search=="win8")
+                    $.os.ie=true;
+                $.ui.ready(function(){
+                    $("#afui").get(0).className=search;
+                });
+            }
+            
+            var webRoot = "./";
+            // $.os.android=true;
+            //$.ui.autoLaunch = false;
+            $.ui.openLinksNewTab = false;
+            $.ui.splitview=false;
+            
+
+            $(document).ready(function(){
+                  // $.ui.launch();
+
+            });
+            
+            /* This code is used to run as soon as intel.xdk activates */
+            var onDeviceReady = function () {
+                intel.xdk.device.setRotateOrientation("portrait");
+                intel.xdk.device.setAutoRotate(false);
+                webRoot = intel.xdk.webRoot + "";
+                //hide splash screen
+                intel.xdk.device.hideSplashScreen();
+                $.ui.blockPageScroll(); //block the page from scrolling at the header/footer
+            };
+            document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
+
+            function showHide(obj, objToHide) {
+                var el = $("#" + objToHide)[0];
+
+                if (obj.className == "expanded") {
+                    obj.className = "collapsed";
+                } else {
+                    obj.className = "expanded";
+                }
+                $(el).toggle();
+
+            }
+
+
+            if($.os.android||$.os.ie||search=="android"){
+                $.ui.ready(function(){
+                    $("#main .list").append("<li><a id='toggleAndroidTheme'>Toggle Theme Color</a></li>");
+                    var $el=$("#afui");
+                    $("#toggleAndroidTheme").bind("click",function(e){
+                        if($el.hasClass("light"))
+                            $el.removeClass("light");
+                        else
+                            $el.addClass("light");
+                    });
+                });
+            }                        
+        </script>   
+      <script>
+      
+            (function() {
+    if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+        var msViewportStyle = document.createElement("style");
+        msViewportStyle.appendChild(
+            document.createTextNode("@-ms-viewport{width:auto!important}")
+        );
+        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+    }
+})();
+
+      var wayback = {};
+       var UltimoProduto = "";
+       var UltimoID=0;
+      wayback.webdb = {};
+      wayback.webdb.db = null;
+      
+      wayback.webdb.open = function() {
+        var dbSize = 2 * 1024 ; // 5MB
+        wayback.webdb.db = openDatabase("wb_simulador", "1.0", "WB Simulador", dbSize);
+      }
+      
+      wayback.webdb.createTable = function() {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS wb_simulador(ID INTEGER PRIMARY KEY ASC, nome_botao TEXT, added_on DATETIME)", []);
+        });
+      }
+      wayback.webdb.createTableResultado = function() {
+      	     
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS wb_resultados(ID INTEGER PRIMARY KEY ASC, Produto TEXT,Modalidade TEXT,VolumeTitulo INTEGER ,Perfil TEXT,QtdPN INTEGER ,Desconto INTEGER ,Enriquecimento TEXT,Email TEXT,SMS TEXT,TTS TEXT,URA TEXT,ZeroOito TEXT,Boleto TEXT,VolumeBoleto INTEGER ,Serasa TEXT,VolumeSerasa INTEGER ,Resultado INTEGER , added_on DATETIME)", []);
+        });
+      }
+
+      wayback.webdb.addItem = function(botaoText) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          var addedOn = new Date();
+          tx.executeSql("INSERT INTO wb_simulador(nome_botao, added_on) VALUES (?,?)",[botaoText, addedOn],wayback.webdb.onSuccess,wayback.webdb.onError);
+         });         
+      }
+      
+      wayback.webdb.onError = function(tx, e) {
+        alert("There has been an error: " + e.message);
+      }
+      
+      wayback.webdb.onSuccess = function(tx, r) {
+        location.href="simulador2.html";
+      }
+        wayback.webdb.onSuccessDel = function(tx, r) {
+        location.href="home.html";
+      }
+      
+      wayback.webdb.onSuccessDel2 = function(tx, r) {
+        
+      }
+        wayback.webdb.onSuccessDelProd = function(tx, r) {
+        location.href="#";
+      }
+      wayback.webdb.getAllItems = function(renderFunc) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("SELECT * FROM wb_simulador order by ID desc LIMIT 1", [], renderFunc,wayback.webdb.onError);
+        });        
+      }
+      
+      wayback.webdb.deleteItem = function(id) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_simulador WHERE ID=?", [id],
+              wayback.webdb.onSuccessDel,
+              wayback.webdb.onError);
+          });        
+          
+      }
+      
+       wayback.webdb.deleteProduto = function(prod) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_resultados WHERE id>=?", [prod],
+              wayback.webdb.onSuccessDelProd,
+              wayback.webdb.onError);
+          });        
+          
+      }
+       wayback.webdb.deleteAllItem = function(id) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_simulador where id>=?", [id],wayback.webdb.onSuccessDel2 ,wayback.webdb.onError);
+          });
+          
+          db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_resultados where id>=?", [id],wayback.webdb.onSuccessDel ,wayback.webdb.onError);
+          });
+      }
+              
+      function loadItems(tx, rs) {
+      	var rowOutput = "";
+      	  for (var i=0; i < rs.rows.length; i++) {
+          rowOutput += renderTodo(rs.rows.item(i));   
+          UltimoProduto =rs.rows.item(i).nome_botao;   
+          UltimoID = rs.rows.item(i).ID;
+        }
+        var todoItems = document.getElementById("todoItems");
+        //todoItems.innerHTML = rowOutput;
+        
+        var rowBotoes = "";
+        var botoesItems = document.getElementById("botoesItems");
+        rowBotoes = renderBotao();
+        botoesItems.innerHTML=rowBotoes;
+        calculaPNs();
+      }
+      
+      function renderModal(prod) {
+        var modal = "";
+        var texto ="";
+           var imagem = prod=="tcm1" ? "images\\iconFiles1.png" : "images\\iconFiles1.png";
+       		modal +="<table  bgcolor='#FFFFFF' width='100%' cellpadding=2 cellspacing=0 border=0 style='border: 1px solid #000080; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px'><tr>";
+			modal +="<td align=left style='width: 8%; background-color:#003399; color :White; font-weight:bold';valign=top background=images\\header.gif><font face=Tahoma size=2>Simulador</font></td>";
+			modal +="<td style='width: 91%;background-color:#003399; color :White; font-weight:bold' align=right valign=top background=images\\header.gif><font face=Tahoma size=2><a href=# onclick=CloseModelPopup() style='color: #FFFFFF; text-decoration: none'>Fechar   </a></font></td>";
+			modal +="<tr><td align=left style='color :White; font-weight:bold';valign=top valign=top><p align=center><span style='color: rgb(52, 52, 52); font-family: Trebuchet MS, Helvetica, Jamrul, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal;";
+			modal +="letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none'>	<img border=0 src="+imagem +" width=64 height=64></span></td>";
+			modal +="<td align=left style='color :White; font-weight:bold';valign=top valign=top><span style='color: rgb(52, 52, 52); font-family: Trebuchet MS, Helvetica, Jamrul, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none'>";
+			modal += texto +"</span></td><tr><td align=left style='color :White; font-weight:bold';valign=top valign=top height=10 colspan=2><p align=right><a href=# onclick=javascript:CloseModelPopup()><img border=0 src=images\\bt_voltar.gif width=108 height=21></a>&nbsp;&nbsp;";
+			modal +="<a href=#banner onclick=additem('"+prod+"')><img border=0 src=images\\bt_simular.gif width=108 height=21></a>&nbsp;</td></table><br><br><br><br><br><br><br><br>";
+			return modal;
+      	}
+      	
+       function renderBotao() {
+       //alert(ListaProdutos.indexOf('tcm1'));
+       var exibe="";
+       	exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Tipo de Serviço:</li>"
+		exibe+="<li>"+UltimoProduto.toUpperCase() +"</li>"
+		exibe+="</ul></div><br>";
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Modalidade:</li>"
+		exibe+="<li><select id=Combo02 name=Combo02  onchange='calculaPNs();' >"
+		exibe+= UltimoProduto =="tc" || UltimoProduto =="rci" || UltimoProduto =="apj" || UltimoProduto =="rcj" || UltimoProduto =="gpj" || UltimoProduto =="rcnf" ? "<option value='08 horas'>08 horas</option>" : "<option value='08 horas'>08 horas</option><option value='12 horas'>12 horas</option>"
+		exibe+="</select></li></ul></div><br>"
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Volume de Títulos/Mês:</li>"
+		exibe+="<li><input id='txtVolume' name='txtVolume' size=10 value=1000 type=tel onblur='return checkNumeros()' style='border-style: solid; border-width: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; font-size:11px; font-family:Microsoft Sans Serif; letter-spacing:0'>"
+		exibe+="</li></ul></div><br>"		
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Perfil do funcionário:</li>"
+		exibe+="<li><select style='width: 100%' id=Combo03 name=Combo03 size=1 onchange='calculaPNs();'>"
+		exibe+= UltimoProduto =="tc" || UltimoProduto =="rcj" || UltimoProduto =="gpj" ? "<option value='Analista'>Analista</option>" : UltimoProduto =="rci" ? "<option value='Internacional'>Internacional</option>" : UltimoProduto =="apj" ? "<option value='Assistente'>Assistente</option>" : "<option value='Operador'>Operador</option><option value='Assistente'>Assistente</option><option value='Analista'>Analista</option>"
+		exibe+="</select></li>"
+		exibe+="</ul></div><br>";
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Quantidade de PN's:</li>";
+        exibe+="<li><input id='txtPN' name='txtPN' disabled=true size=10 value=0 type=tel  style='border-style: solid; border-width: 1px; padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; font-size:11px; font-family:Microsoft Sans Serif; letter-spacing:0; background-color: #EFEFEF;width: 100%'>"
+		exibe+="</li>"
+		exibe+="</ul></div><br>";
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Recursos Inclusos:</li>"
+		exibe+="<li>"
+		exibe+="<input type=checkbox name=chkEnriquecimento id=chkEnriquecimento checked><label for=chkEnriquecimento >Enriquecimento</label><BR>"
+		exibe+="<input type=checkbox name=chkEmail id=chkEmail checked><label for=chkEmail >E-mail</label><BR>"
+		exibe+="<input type=checkbox name=chkSMS id=chkSMS checked><label for=chkSMS >SMS</label><BR>"
+		exibe+="<input type=checkbox name=chkTTS id=chkTTS checked><label for=chkTTS >TTS</label><BR>"
+		exibe+="<input type=checkbox name=chkURA id=chkURA checked><label for=chkURA >URA</label><BR><BR><BR>"
+		exibe+="</li>"
+		exibe+="</ul></div><br>";
+		exibe+="<div ><ul class='list inset'>"
+        exibe+="<li class=divider>Recursos Adicionais:</li>"
+		exibe+="<li>"
+		exibe+="<input type=checkbox name=chk0800 id=chk0800><label for=chk0800 >0800</label><BR>"
+		exibe+="<input type=checkbox name=chkBoleto id=chkBoleto><label for=chkBoleto>Boleto: <input for=chkBoleto id='txtVolumeBoleto' name='txtVolumeBoleto' size=5 value=0 type=tel onblur='return checkNumeros()' style='width: 25%'></label><br>"
+		exibe+="<input type=checkbox name=chkSerasa id=chkSerasa><label for=chkSerasa>Consulta Serasa(*): <input id='txtVolumeSerasa' name='txtVolumeSerasa' size=5 value=0 type=tel onblur='return checkNumeros()' style='width: 25%'><br>"
+		exibe+="<font face=Arial size=1>(*) A consulta do Serasa que será disponibilizada é o Concentre</font></label><br><br><br><br><br><br>"
+		exibe+="</li>"
+		exibe+="</ul></div><br>";
+		exibe+="<center><a class='button green' href=# onclick=calculaResultado();>Calcular</a>&nbsp;<a href=# class=button onclick='wayback.webdb.deleteItem(" + UltimoID +");'>Voltar</a>"
+       
+        return exibe;
+      }
+
+
+      function renderTodo(row) {
+        return "<li>" + row.nome_botao + " [<a href='javascript:void(0);'  onclick='wayback.webdb.deleteItem(" + row.ID +");'>Delete</a>]</li>";
+      }
+      
+      function init() {        
+        wayback.webdb.open();
+        wayback.webdb.createTable();
+        wayback.webdb.createTableResultado(); 
+        wayback.webdb.getAllItems(loadItems);        
+      }
+      
+      function additem(item) {        
+        wayback.webdb.addItem(item);
+       CloseModelPopup();       
+      }
+      
+    function OpenModelPopup(imagem)
+    {       
+    	var modal = "";
+        var modalItems = document.getElementById("confirmar");
+       	modal=  renderModal(imagem);
+       	modalItems.innerHTML=modal;
+   		document.getElementById ('MaskedDiv').style.display='';
+        document.getElementById ('MaskedDiv').style.visibility='visible';
+        document.getElementById ('MaskedDiv').style.top='10px';//Math.round ((document.documentElement.clientHeight/2)+ document.documentElement.scrollTop)-100 + 'px';;
+        document.getElementById ('MaskedDiv').style.left='90%';
+        document.getElementById ('MaskedDiv').style.right='90%';
+        document.getElementById ('MaskedDiv').style.width='90%';
+        document.getElementById ('MaskedDiv').style.height='90%';
+        document.getElementById ('MaskedDiv').style.overflow='auto';        
+    }
+    
+      function CloseModelPopup()
+    {
+        document.getElementById ('MaskedDiv').style.display='none';
+    }
+    
+    function checkNumeros()
+	{
+	  var x=document.getElementById('txtVolume').value;
+	  if (isNaN(x)) 
+	  {
+	    alert("Digite somente números!");
+	    document.getElementById('txtVolume').focus();
+	    return false;
+	  }	  
+	  if(x<1)
+	  {
+	  alert("É válido somente valores >=1!");
+	 	 document.getElementById('txtVolume').value="1";
+	    document.getElementById('txtVolume').focus();
+	    return false;
+	  }
+	  calculaPNs();
+	}
+    
+   function calculaPNs()
+	{
+	  var fator= 0.0;
+	  var vl_hora= 0.0;
+	  var volume = parseFloat(document.getElementById('txtVolume').value);
+	 if (UltimoProduto =="rec"){
+	 	fator= 2.70;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 90.0 : 126.0;
+	 }else if (UltimoProduto =="gpa"){
+	  	fator= 2.10;
+	  	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 120.0 : 168.0;
+	 }else if (UltimoProduto =="bpo"){
+	 	fator= 2.22;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 105.0 : 147.0;
+	 }else if (UltimoProduto =="tc"){
+	 	fator= 0.0;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 0.0 : 0.0;
+	 }else if (UltimoProduto =="rcn"){
+	 	fator= 6.30;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 76.0 : 102.60;
+	 }else if (UltimoProduto =="rci"){
+	 	fator= 15.90;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 36.0 : 0.0;
+	 }else if (UltimoProduto =="apj"){
+	  	fator=9.60;
+	  	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 58.0 : 0.0;
+	 }else if (UltimoProduto =="rcj"){
+	 	fator= 5.67;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 42.0 : 0.0;
+	 }else if (UltimoProduto =="gpj"){
+	 	fator= 25.65;
+	 	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 50.0 : 0.0;
+	 }else {
+	  	fator= 6.30;
+	  	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 110.0 : 0.0;
+	 }
+	 
+	document.getElementById('txtPN').value = isNaN(((fator*volume)/vl_hora)/20.0)==true ? 0 : Math.round(((fator*volume)/vl_hora)/20.0) ;
+ 			
+	}
+	
+	 function calculaResultado()
+	{
+	  var Produto= UltimoProduto;
+	  var Modalidade= document.getElementById('Combo02').value;
+		var VolumeTitulo= parseFloat(document.getElementById('txtVolume').value);
+		var Perfil= document.getElementById('Combo03').value;
+		var QtdPN= parseFloat(document.getElementById('txtPN').value);
+		var Desconto= 0;
+		var Enriquecimento= document.getElementById('chkEnriquecimento').checked==true ? "SIM" : "NÃO";
+		var Email= document.getElementById('chkEmail').checked==true ? "SIM" : "NÃO";
+		var SMS= document.getElementById('chkSMS').checked==true ? "SIM" : "NÃO";
+		var TTS= document.getElementById('chkTTS').checked==true ? "SIM" : "NÃO";
+		var URA= document.getElementById('chkURA').checked==true ? "SIM" : "NÃO";
+		var ZeroOito= document.getElementById('chk0800').checked==true ? "SIM" : "NÃO";
+		var Boleto= document.getElementById('chkBoleto').checked==true ? "SIM" : "NÃO";
+		var VolumeBoleto= parseFloat(document.getElementById('txtVolumeBoleto').value);
+		var Serasa= document.getElementById('chkSerasa').checked==true ? "SIM" : "NÃO";
+		var VolumeSerasa= parseFloat(document.getElementById('txtVolumeSerasa').value);
+		var Resultado = QtdPN*VolumeTitulo;
+		
+		
+				
+		 var dbR = wayback.webdb.db;
+        dbR.transaction(function(tx){
+          var addedOn = new Date();
+          tx.executeSql("INSERT INTO wb_resultados(Produto,Modalidade,VolumeTitulo,Perfil,QtdPN,Desconto,Enriquecimento,Email,SMS,TTS,URA,ZeroOito,Boleto,VolumeBoleto,Serasa,VolumeSerasa,Resultado, added_on) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+          ,[Produto,Modalidade,VolumeTitulo,Perfil,QtdPN,Desconto,Enriquecimento,Email,SMS,TTS,URA,ZeroOito,Boleto,VolumeBoleto,Serasa,VolumeSerasa,Resultado, addedOn]
+          ,wayback.webdb.onSuccess,wayback.webdb.onError);
+        }); 
+	}
+
+    </script>
+
+</head>
+<body onload="init();"> 
+<div id="afui" class="">
+<div class=header id=header>
+        <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
+        <h1 id="pageTitle" class="">Simulador</h1> 
+    </div>
+<div id="content">
+<div id='main' class="panel" selected="true">
+
+<div title="" class="panel" id="webslider"  style="background-image: url(images/bg.jpg); display: block; -webkit-transform: translate3d(0px, 0px, 0px) scale(1) rotate(0deg) rotateY(0deg) skew(0deg, 0deg); -webkit-backface-visibility: auto; -webkit-transition: all 325ms linear; transition: all 325ms linear; -webkit-transform-origin: 0% 0%;">
+		<script>
+                        var myScroller;
+                        $.ui.ready(function () {
+                            myScroller = $("#webslider").scroller(); //Fetch the scroller from cache
+                            //Since this is a App Framework UI scroller, we could also do
+                            // myScroller=$.ui.scrollingDivs['webslider'];
+                            myScroller.addInfinite();
+                            myScroller.addPullToRefresh();
+                            myScroller.runCB=true;
+                            $.bind(myScroller, 'scrollend', function () {
+                                console.log("scroll end");
+                            });
+
+                            $.bind(myScroller, 'scrollstart', function () {
+                                console.log("scroll start");
+                            });
+                            $.bind(myScroller,"scroll",function(position){
+                                
+                            })
+                            $.bind(myScroller, "refresh-trigger", function () {
+                                console.log("Atualizando");
+                            });
+                            var hideClose;
+                            $.bind(myScroller, "refresh-release", function () {
+                                var that = this;
+                                console.log("Atualizando");
+                                clearTimeout(hideClose);
+                                hideClose = setTimeout(function () {
+                                    console.log("hiding manually refresh");
+                                    that.hideRefresh();
+                                }, 50000);
+                                return false; //tells it to not auto-cancel the refresh
+                            });
+
+                            $.bind(myScroller, "refresh-cancel", function () {
+                                clearTimeout(hideClose);
+                                console.log("cancelled");
+                            });
+                            myScroller.enable();
+
+                            $.bind(myScroller, "infinite-scroll", function () {
+                                var self = this;
+                                console.log("infinite triggered");
+                                $(this.el).append("");
+                                $.bind(myScroller, "infinite-scroll-end", function () {
+                                    $.unbind(myScroller, "infinite-scroll-end");
+                                    self.scrollToBottom();
+                                    setTimeout(function () {
+                                        $(self.el).find("#infinite").remove();
+                                        self.clearInfinite();
+                                        $(self.el).append("");
+                                        self.scrollToBottom();
+                                    }, 30000);
+                                });
+                            });
+                            $("#webslider").css("overflow", "none");
+                            
+
+                            
+                        });
+                    </script>
+	<table border="0" width="100%" height="100%" >
+	<tr>
+		<td><center>
+		<ul id="todoItems"></ul> 
+			<h1>
+						<img border="0" src="images/mainLogo.png" width="188" height="63"></h1>
+						<div id="MaskedDiv" class ="MaskedDiv">
+							<div id="confirmar" style="overflow:hidden"></div>
+        				</div>					
+							<ul id="botoesItems"></ul>		
+		
+		</center></td>
+	</tr>
+</table>
+		</div>	
+<footer><a class="icon home" href=# onclick="location.href='home.html'">Home</a><a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a><a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a></footer></div>
+</div>
+<div id="navbar"></div>
+</div>
+</body>
+</html>

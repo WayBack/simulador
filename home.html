@@ -1,0 +1,508 @@
+<html>
+<head>
+<title>Simulador - Way Back</title>
+<link rel="stylesheet" type="text/css" href="css/af.ui.css" />
+<link rel="stylesheet" type="text/css" href="css/icons.css" />
+<link rel="stylesheet" type="text/css" href="css/stylesimulador.css" />
+<!-- <script src="http://cdn.app-framework-software.intel.com/2.1/appframework.ui.min.js"></script> -->
+
+<script src="appframework.ui.min.js"></script>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              
+      <link rel="stylesheet" type="text/css" href="css/main.css"  />
+      
+      <link rel="stylesheet" type="text/css" href="css/lists.css"  />
+      <link rel="stylesheet" type="text/css" href="css/forms.css"  />
+      <link rel="stylesheet" type="text/css" href="css/buttons.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/badges.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/grid.css"  />
+
+      <link rel="stylesheet" type="text/css" href="css/android.css"  />
+      <link rel="stylesheet" type="text/css" href="css/win8.css"  />
+      <link rel="stylesheet" type="text/css" href="css/bb.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
+      <link rel="stylesheet" type="text/css" href="css/tizen.css"  />
+        
+      <link rel="stylesheet" type="text/css" href="css/af.actionsheet.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.popup.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.scroller.css"  />
+      <link rel="stylesheet" type="text/css" href="css/af.selectBox.css"  />  
+        
+        
+        <!-- uncomment for intel.xdk apps 
+        <script type="text/javascript" charset="utf-8" src="intelxdk.js"></script>
+        <script type="text/javascript" charset="utf-8" src="xhr.js"></script>
+        -->
+       
+        <!-- include af.desktopBrowsers.js on desktop browsers only -->
+        <script>
+
+            function loadedPanel(what) {
+                //We are going to set the badge as the number of li elements inside the target
+                $.ui.updateBadge("#aflink", $("#af").find("li").length);
+            }
+
+
+            function unloadedPanel(what) {
+                console.log("unloaded " + what.id);
+            }
+
+            if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+                var script = document.createElement("script");
+                script.src = "css/af.desktopBrowsers.js";
+                var tag = $("head").append(script);
+                //$.os.desktop=true;
+            }
+
+          //  $.feat.nativeTouchScroll=true;
+          
+        </script>        
+        <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
+        <script type="text/javascript" charset="utf-8" src="css/af.scroller.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.selectBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.touchEvents.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.touchLayer.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.popup.js"></script>
+
+      
+        <script type="text/javascript" charset="utf-8" src="css/transitions/fade.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/flip.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/pop.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slide.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slideDown.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/transitions/slideUp.js"></script>
+        <script type="text/javascript" charset="utf-8" src="css/af.slidemenu.js"></script>
+        </style>	<style type="text/css">
+
+		@keyframes animatedBackground {
+			from { background-position: 0 0; }
+			to { background-position: 100% 0; }
+		}
+		@-webkit-keyframes animatedBackground {
+			from { background-position: 0 0; }
+			to { background-position: 100% 0; }
+		}
+		@-ms-keyframes animatedBackground {
+			from { background-position: 0 0; }
+			to { background-position: 100% 0; }
+		}
+		@-moz-keyframes animatedBackground {
+			from { background-position: 0 0; }
+			to { background-position: 100% 0; }
+		}
+
+		#animate-area	{ 
+			width: 560px; 
+			height: 400px; 
+			background-image: url('images/bg.jpg');
+			background-position: 0px 0px;
+			background-repeat: repeat-x;
+
+			animation: animatedBackground 40s linear infinite;
+			-ms-animation: animatedBackground 40s linear infinite;
+			-moz-animation: animatedBackground 40s linear infinite;
+			-webkit-animation: animatedBackground 40s linear infinite
+		}
+	</style>
+
+        <script type="text/javascript">
+            /* This function runs once the page is loaded, but intel.xdk is not yet active */
+            //$.ui.animateHeaders=false;
+             var search=document.location.search.toLowerCase().replace("?","");
+             //if(!search)
+            $.ui.useOSThemes=true;
+            if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
+            {
+
+               $.ui.useOSThemes=true;
+                if(search=="win8")
+                    $.os.ie=true;
+                $.ui.ready(function(){
+                    $("#afui").get(0).className=search;
+                });
+            }
+            
+            var webRoot = "./";
+            // $.os.android=true;
+            //$.ui.autoLaunch = false;
+            $.ui.openLinksNewTab = false;
+            $.ui.splitview=false;
+            
+
+            $(document).ready(function(){
+                  // $.ui.launch();
+
+            });
+            
+            /* This code is used to run as soon as intel.xdk activates */
+            var onDeviceReady = function () {
+                intel.xdk.device.setRotateOrientation("portrait");
+                intel.xdk.device.setAutoRotate(false);
+                webRoot = intel.xdk.webRoot + "";
+                //hide splash screen
+                intel.xdk.device.hideSplashScreen();
+                $.ui.blockPageScroll(); //block the page from scrolling at the header/footer
+            };
+            document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
+
+            function showHide(obj, objToHide) {
+                var el = $("#" + objToHide)[0];
+
+                if (obj.className == "expanded") {
+                    obj.className = "collapsed";
+                } else {
+                    obj.className = "expanded";
+                }
+                $(el).toggle();
+
+            }
+
+
+            if($.os.android||$.os.ie||search=="android"){
+                $.ui.ready(function(){
+                    $("#main .list").append("<li><a id='toggleAndroidTheme'>Toggle Theme Color</a></li>");
+                    var $el=$("#afui");
+                    $("#toggleAndroidTheme").bind("click",function(e){
+                        if($el.hasClass("light"))
+                            $el.removeClass("light");
+                        else
+                            $el.addClass("light");
+                    });
+                });
+            }                        
+        </script>   
+   
+      	<script>
+      var wayback = {};
+       var ListaProdutos = new Array();
+      wayback.webdb = {};
+      wayback.webdb.db = null;
+      
+      wayback.webdb.open = function() {
+        var dbSize = 2 * 1024; // 5MB
+        wayback.webdb.db = openDatabase("wb_simulador", "1.0", "WB Simulador", dbSize);
+      }
+      
+      wayback.webdb.createTable = function() {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS wb_simulador(ID INTEGER PRIMARY KEY ASC, nome_botao TEXT, added_on DATETIME)", []);
+        });
+      }
+      
+     wayback.webdb.createTableResultado = function() {
+      	     
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS wb_resultados(ID INTEGER PRIMARY KEY ASC, Produto TEXT,Modalidade TEXT,VolumeTitulo INTEGER ,Perfil TEXT,QtdPN INTEGER ,Desconto INTEGER ,Enriquecimento TEXT,Email TEXT,SMS TEXT,TTS TEXT,URA TEXT,ZeroOito TEXT,Boleto TEXT,VolumeBoleto INTEGER ,Serasa TEXT,VolumeSerasa INTEGER ,Resultado INTEGER , added_on DATETIME)", []);
+        });
+      }
+      
+      wayback.webdb.addItem = function(botaoText) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          var addedOn = new Date();
+          tx.executeSql("INSERT INTO wb_simulador(nome_botao, added_on) VALUES (?,?)",
+              [botaoText, addedOn],
+              wayback.webdb.onSuccess,
+              wayback.webdb.onError);
+         });         
+         
+      }
+      
+      wayback.webdb.onError = function(tx, e) {
+        alert("There has been an error: " + e.message);
+      }
+      
+      wayback.webdb.onSuccess = function(tx, r) {
+       // wayback.webdb.getAllItems(loadItems);
+        location.href="simulador.html";
+      }
+      
+      wayback.webdb.onSuccessDel = function(tx, r) {
+       // wayback.webdb.getAllItems(loadItems);
+        location.href="home.html";
+      }
+      wayback.webdb.onSuccessDel2 = function(tx, r) {
+       
+      }
+      wayback.webdb.getAllItems = function(renderFunc) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx) {
+          tx.executeSql("SELECT * FROM wb_simulador", [], renderFunc,wayback.webdb.onError);
+        });        
+      }
+      
+      wayback.webdb.deleteItem = function(id) {
+        var db = wayback.webdb.db;
+        db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_simulador WHERE ID=?", [id],
+              wayback.webdb.onSuccess,
+              wayback.webdb.onError);
+          });
+      }
+      
+         wayback.webdb.deleteAllItem = function(id) {
+        var db = wayback.webdb.db;
+        ListaProdutos=[];
+        db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_simulador where id>=?", [id],wayback.webdb.onSuccessDel2,wayback.webdb.onError);
+          });
+          
+          db.transaction(function(tx){
+          tx.executeSql("DELETE FROM wb_resultados where id>=?", [id],wayback.webdb.onSuccessDel,wayback.webdb.onError);
+          });
+      }
+              
+      function loadItems(tx, rs) {
+      	var rowOutput = "";
+        var todoItems = document.getElementById("todoItems");
+        var rowBotoes = "";
+        var botoesItems = document.getElementById("botoesItems");
+        ListaProdutos=[];
+        for (var i=0; i < rs.rows.length; i++) {
+          rowOutput += renderTodo(rs.rows.item(i));
+          //alert(rs.rows.item(i).nome_botao);
+          ListaProdutos.push(rs.rows.item(i).nome_botao);
+           //alert(ListaProdutos.indexOf('tcm'));                 
+        }
+      	rowBotoes = renderBotao();
+        todoItems.innerHTML = rowOutput;
+        botoesItems.innerHTML=rowBotoes;
+      }
+      
+      function renderModal(prod) {
+        var modal = "";
+        var texto ="";
+        if(prod=="tc"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 1";
+		}else if(prod=="gpa"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 2";
+		}else if(prod=="rec"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 3";
+		}else if(prod=="rcn"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 4";
+		}else if(prod=="rci"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 5";
+		}else if(prod=="apj"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 6";
+		}else if(prod=="rcj"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 7";
+		}else if(prod=="gpj"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 8";
+		}else if(prod=="rcnf"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 9";
+		}else if(prod=="bpo"){
+		 //texto += "Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações entre pessoas jurídicas dos mais variados segmentos (visite nosso portfólio de CLIENTES). <br><BR>Com base nos princípios da “preservação ";
+		 //texto += "da relação comercial entre credor e cliente inadimplente” e “conhecimento das atividades core do contratante”, a Way Back atua como uma extensão do “contas à receber” de seus clientes, proporcionando comodidade, segurança, transparência e performance efetivamente ";
+		 //texto +="superior em comparação a uma gestão de cobrança não-terceirizada.";
+		 texto +="Detentora de uma expertise adquirida ao longo de seus mais de 20 anos de atuação, a Way Back é especialista em negociações de TCM 9";
+		}
+          var imagem = prod=="tcm1" ? "images\\iconFiles1.png" : "images\\iconFiles1.png";
+       		modal +="<table  bgcolor='#FFFFFF' width='100%' cellpadding=2 cellspacing=0 border=0 style='border: 1px solid #000080; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px'><tr>";
+			modal +="<td align=left style='width: 8%; background-color:#003399; color :White; font-weight:bold';valign=top background=images\\header.gif><font face=Tahoma size=2>Simulador</font></td>";
+			modal +="<td style='width: 91%;background-color:#003399; color :White; font-weight:bold' align=right valign=top background=images\\header.gif><font face=Tahoma size=2><a href=# onclick=CloseModelPopup() style='color: #FFFFFF; text-decoration: none'>Fechar   </a></font></td>";
+			modal +="<tr><td align=left style='color :White; font-weight:bold';valign=top valign=top><p align=center><span style='color: rgb(52, 52, 52); font-family: Trebuchet MS, Helvetica, Jamrul, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal;";
+			modal +="letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none'>	<img border=0 src="+imagem +" width=64 height=64></span></td>";
+			modal +="<td align=left style='color :White; font-weight:bold';valign=top valign=top><span style='color: rgb(52, 52, 52); font-family: Trebuchet MS, Helvetica, Jamrul, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none'>";
+			modal += texto +"</span></td><tr><td align=left style='color :White; font-weight:bold';valign=top valign=top height=10 colspan=2><p align=right><a class='button' href=# onclick=javascript:CloseModelPopup()>Voltar</a>&nbsp;&nbsp;";
+			modal +="<a class='button green' href=# onclick=additem('"+prod+"')>Simular</a>&nbsp;</td></table><br><br><br><br><br><br><br><br>";
+			return modal;
+      	}
+      	
+       function renderBotao() {
+       //alert(ListaProdutos.indexOf('tcm1'));
+       var exibe="";
+        exibe+="<br>";
+        exibe+= ListaProdutos.indexOf('tc')==-1 ?"<a href=# class=image onclick=OpenModelPopup('tc')><img src=images\\iconTC.png ></a>" : "<img src=images\\iconTC_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('gpa')==-1 ?"<a href=# class=image onclick=OpenModelPopup('gpa')><img src=images\\iconGPA.png ></a>" : "<img src=images\\iconGPA_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('rec')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rec')><img src=images\\iconREC.png ></a>" : "<img src=images\\iconREC_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('rcn')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rcn')><img src=images\\iconRCN.png class='fa fa-backward'></a>" : "<img src=images\\iconRCN_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('rci')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rci')><img src=images\\iconRCI.png class='fa fa-backward'></a>" : "<img src=images\\iconRCI_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('apj')==-1 ?"<a href=# class=image onclick=OpenModelPopup('apj')><img src=images\\iconAPJ.png class='fa fa-backward'></a>" : "<img src=images\\iconAPJ_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('rcj')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rcj')><img src=images\\iconRCJ.png class='fa fa-backward'></a>" : "<img src=images\\iconRCJ_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('gpj')==-1 ?"<a href=# class=image onclick=OpenModelPopup('gpj')><img src=images\\iconGPJ.png class='fa fa-backward'></a>" : "<img src=images\\iconGPJ_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('rcnf')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rcnf')><img src=images\\iconRCNF.png class='fa fa-backward'></a>" : "<img src=images\\iconRCNF_desab.png>";
+        exibe+="&nbsp;&nbsp;";
+        exibe+= ListaProdutos.indexOf('bpo')==-1 ?"<a href=# class=image onclick=OpenModelPopup('bpo')><img src=images\\iconBPO.png class='fa fa-backward'></a>" : "<img src=images\\iconBPO_desab.png>";
+        
+        return exibe;
+      }
+      
+      function renderTodo(row) {
+        return ""; //"<li>" + row.nome_botao + " [<a href='javascript:void(0);'  onclick='wayback.webdb.deleteItem(" + row.ID +");'>Delete</a>]</li>";
+      }
+      
+      function init() {        
+        wayback.webdb.open();
+        wayback.webdb.createTable();
+        wayback.webdb.createTableResultado(); 
+        wayback.webdb.getAllItems(loadItems);        
+      }
+      
+      function additem(item) {        
+        wayback.webdb.addItem(item);
+       CloseModelPopup();       
+      }
+      
+    function OpenModelPopup(imagem)
+    {       
+    	var modal = "";
+        var modalItems = document.getElementById("confirmar");
+       	modal=  renderModal(imagem);
+       	modalItems.innerHTML=modal;
+   		document.getElementById ('MaskedDiv').style.display='';
+        document.getElementById ('MaskedDiv').style.visibility='visible';
+        document.getElementById ('MaskedDiv').style.top='10px';//Math.round ((document.documentElement.clientHeight/2)+ document.documentElement.scrollTop)-100 + 'px';;
+        document.getElementById ('MaskedDiv').style.left='90%';
+        document.getElementById ('MaskedDiv').style.right='90%';
+        document.getElementById ('MaskedDiv').style.width='90%';
+        document.getElementById ('MaskedDiv').style.height='90%';
+        document.getElementById ('MaskedDiv').style.overflow='auto';        
+    }
+    
+      function CloseModelPopup()
+    {
+        document.getElementById ('MaskedDiv').style.display='none';
+    }
+    </script> 
+</head>
+<body onload="init();"> 
+
+<div id="afui" class="">
+<div class=header id=header>
+        <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
+        <h1 id="pageTitle" class="">Simulador</h1> 
+    </div>
+   
+<div id="content">
+	<div id='main' class="panel" selected="true">
+	
+		<div title="" class="panel" id="webslider"  style="background-image: url(images/bg.jpg); display: block; -webkit-transform: translate3d(0px, 0px, 0px) scale(1) rotate(0deg) rotateY(0deg) skew(0deg, 0deg); -webkit-backface-visibility: auto; -webkit-transition: all 325ms linear; transition: all 325ms linear; -webkit-transform-origin: 0% 0%;">
+		<script>
+                        var myScroller;
+                        $.ui.ready(function () {
+                            myScroller = $("#webslider").scroller(); //Fetch the scroller from cache
+                            //Since this is a App Framework UI scroller, we could also do
+                            // myScroller=$.ui.scrollingDivs['webslider'];
+                            myScroller.addInfinite();
+                            myScroller.addPullToRefresh();
+                            myScroller.runCB=true;
+                            $.bind(myScroller, 'scrollend', function () {
+                                console.log("scroll end");
+                            });
+
+                            $.bind(myScroller, 'scrollstart', function () {
+                                console.log("scroll start");
+                            });
+                            $.bind(myScroller,"scroll",function(position){
+                                
+                            })
+                            $.bind(myScroller, "refresh-trigger", function () {
+                                console.log("Atualizando");
+                            });
+                            var hideClose;
+                            $.bind(myScroller, "refresh-release", function () {
+                                var that = this;
+                                console.log("Atualizando");
+                                clearTimeout(hideClose);
+                                hideClose = setTimeout(function () {
+                                    console.log("hiding manually refresh");
+                                    that.hideRefresh();
+                                }, 50000);
+                                return false; //tells it to not auto-cancel the refresh
+                            });
+
+                            $.bind(myScroller, "refresh-cancel", function () {
+                                clearTimeout(hideClose);
+                                console.log("cancelled");
+                            });
+                            myScroller.enable();
+
+                            $.bind(myScroller, "infinite-scroll", function () {
+                                var self = this;
+                                console.log("infinite triggered");
+                                $(this.el).append("");
+                                $.bind(myScroller, "infinite-scroll-end", function () {
+                                    $.unbind(myScroller, "infinite-scroll-end");
+                                    self.scrollToBottom();
+                                    setTimeout(function () {
+                                        $(self.el).find("#infinite").remove();
+                                        self.clearInfinite();
+                                        $(self.el).append("");
+                                        self.scrollToBottom();
+                                    }, 30000);
+                                });
+                            });
+                            $("#webslider").css("overflow", "none");
+                            
+
+                            
+                        });
+                    </script>
+
+					<table border="0" width="100%" height="100%" >
+						<tr>
+							<td><center>
+							<ul id="todoItems"></ul> 
+								<h1>
+											<img border="0" src="images/mainLogo.png" width="188" height="63"></h1>
+											<div id="MaskedDiv" class ="MaskedDiv">
+												<div id="confirmar" style="overflow:hidden"></div>
+					        				</div>					
+												<ul id="botoesItems"></ul>		
+							
+							</center></td>
+						</tr>
+					</table> 
+		</div>	
+
+<footer><a class="icon home" href=# onclick="location.href='home.html'">Home</a><a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a><a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a></footer>
+</div>
+</div>
+<div id="navbar"></div>
+</div>
+</body>
+</html>
