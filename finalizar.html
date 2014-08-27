@@ -79,7 +79,7 @@
         <script type="text/javascript" charset="utf-8" src="css/transitions/slideDown.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/transitions/slideUp.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.slidemenu.js"></script>
-        -->
+        
 
         <script type="text/javascript">
             /* This function runs once the page is loaded, but intel.xdk is not yet active */
@@ -351,7 +351,7 @@
       	var exibe="";
       	exibe+="<br><div><ul class='list inset'>"
         exibe+="<li class=divider>"+row.Produto.toUpperCase() +"</li>"
-		exibe+="<li><table border=0 width='100%'><tr><td align=center>Quantidade de PN's: "+row.QtdPN +"</td><td align=center>Investimento:   $ "+parseFloat(row.Resultado).toFixed(2)+"</td></tr></table></li>"
+		exibe+="<li><table border=0 width='100%'><tr><td align=center>Quantidade de PN's: "+row.QtdPN +"</td><td align=center>Investimento:   R$ "+parseFloat(row.Resultado).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
 		exibe+="</ul></div>";	
 
         return exibe;
@@ -359,10 +359,11 @@
       
       function renderTodo2() {
       	var exibe="";
-      	exibe+="<br><br><table border=0 width='100%' cellspacing=0><font size=3>"
-      	exibe+="<tr><td align=center bgcolor=#E1F0FF><b>Total:</h1></b><td align=center bgcolor=#E1F0FF>"+Pa +" PA(s)</td><td align=center bgcolor=#E1F0FF> $ "+ parseFloat(total).toFixed(2) +"</td></tr>"
-      	exibe+="<tr><td align=center bgcolor=#008000><font color=#FFFFFF size=3><b>Investimento Final</b> (com desconto):</td><td align=center bgcolor=#008000></td><td align=center bgcolor=#008000><font color=#FFFFFF size=3><b>$ "+ parseFloat(total_desconto).toFixed(2) +"</b></font></td></tr>"
-		exibe+="</table>";
+      	exibe+="<br><br><div><ul class='list inset'><li class=divider>TOTAIS</li>"
+      	exibe+="<b><li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>PN's: </td><td align=RIGHT>"+Pa +"</td></tr></table></li>"
+		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Investimento: </td><td align=RIGHT>R$ "+parseFloat(total).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
+		exibe+="<li style='background-color:#008000;'><table border=0 width='100%'><tr><td align=center><font color=#FFFfff>Investimento Final: </td><td align=RIGHT><font color=#FFFfff>R$ "+ parseFloat(total_desconto).toFixed(2).replace('.', ',') +"</font></td></tr></table></li>"
+      	exibe+="</ul></div>";
 
         return exibe;
       }
@@ -491,7 +492,9 @@
 	}
 
     </script>
-
+  <script>
+        $.ui.useOSThemes = false;
+    </script>  
 </head>
 <body onload="init();"> 
 <div id="afui" class="">
@@ -502,7 +505,7 @@
 <div id="content">
 <div id='main' class="panel" selected="true">
 
-<div title="" class="panel" id="webslider"  style="background-image: url(images/bg.jpg); display: block; -webkit-transform: translate3d(0px, 0px, 0px) scale(1) rotate(0deg) rotateY(0deg) skew(0deg, 0deg); -webkit-backface-visibility: auto; -webkit-transition: all 325ms linear; transition: all 325ms linear; -webkit-transform-origin: 0% 0%;">
+<div title="" class="panel" id="webslider"  style="display: block; -webkit-transform: translate3d(0px, 0px, 0px) scale(1) rotate(0deg) rotateY(0deg) skew(0deg, 0deg); -webkit-backface-visibility: auto; -webkit-transition: all 325ms linear; transition: all 325ms linear; -webkit-transform-origin: 0% 0%;">
 		<script>
                         var myScroller;
                         $.ui.ready(function () {
