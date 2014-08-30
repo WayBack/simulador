@@ -242,7 +242,7 @@ body {
     left:0;
     right:0;
     bottom: 0;
-    position:relative;
+    position:fixed;
     padding:0 3px;
 }
 
@@ -264,7 +264,7 @@ body {
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
     line-height: 67px;
-    position: relative;
+    position: fixed;
     margin: 0;
 }
 
@@ -276,7 +276,7 @@ body {
 
 
 #afui footer>a.icon:not(.button):before {
-    position:absolute;
+    position:fixed;
     top:2px;
     left:0;
     font-size: 25px;
