@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <title>Simulador - Way Back</title>
@@ -85,11 +86,11 @@
             //$.ui.animateHeaders=false;
              var search=document.location.search.toLowerCase().replace("?","");
              //if(!search)
-            $.ui.useOSThemes=true;
+            $.ui.useOSThemes=false;  //habilitar tema do sistema operacional
             if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
             {
 
-               $.ui.useOSThemes=true;
+               $.ui.useOSThemes=false;
                 if(search=="win8")
                     $.os.ie=true;
                 $.ui.ready(function(){
@@ -430,9 +431,7 @@
         document.getElementById ('MaskedDiv').style.display='none';
     }
     </script> 
-      <script>
-        $.ui.useOSThemes = false;
-    </script>  
+   
 </head>
 <body onload="init();"> 
 <div id="afui" class="">
@@ -505,13 +504,12 @@
                             
                         });
                     </script>
-<table border="0" width="100%" height="100%" >
-	<tr>
-		<td><center>
+
+		<center>
 		<ul id="todoItems"></ul> 
-			<h1>
+			<h1><br><br>
 						<img border="0" src="images/mainLogo.png" width="171" height="51">
-						<p>Selecione os produtos que o cliente já possui:</p></h1>
+						<p>Selecione os produtos que o cliente já possui:</p></h1><br><br>
 						<div id="MaskedDiv" class ="MaskedDiv">
 							<div id="confirmar" style="overflow:auto"></div>
         				</div>					
@@ -520,9 +518,7 @@
         					<center><br><br><a class='button green' href=# onclick='exibirResultados();'>Ver Resultado</a></center>
         					</div>	
 		
-		</center></td>
-	</tr>
-</table>
+		</center>
 </div>
 <footer><a class="icon home" href=# onclick="location.href='home.html'">Home</a><a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a><a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a></footer></div>
 </div>
