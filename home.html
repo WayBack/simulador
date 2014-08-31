@@ -63,6 +63,7 @@
           //  $.feat.nativeTouchScroll=true;
           
         </script>        
+        <script type="text/javascript" charset="utf-8" src="css/cordova.js"></script>   
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -382,24 +383,20 @@
         document.getElementById ('MaskedDiv').style.display='none';
     }
     
-    function exitFromApp() {
-    navigator.notification.confirm(
-        'Do you want to close the app?',
-        closeApp,
-        'Daily Bible Verse',
-        'Yes, No'
+function showConfirm() {
+        navigator.notification.confirm(
+            'Do you really want to exit?',  // message
+            exitFromApp,              // callback to invoke with index of button pressed
+            'Exit',            // title
+            'Cancel,OK'         // buttonLabels
         );
-}
-     
-function closeApp(buttonIndex) {
-    if (buttonIndex == 1) {
-        navigator.app.exitApp();
-        navigator.device.exitApp();
     }
-    else {
-   //     alert('Glad you are staying! ');
-    }
-}
+ 
+    
+    function exitFromApp(buttonIndex) {
+      if (buttonIndex==2){
+       navigator.app.exitApp();
+    	}
 
     </script> 
 
