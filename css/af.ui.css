@@ -238,11 +238,13 @@ body {
 #afui .footer {  
     z-index:180;
     height:49px;
-    display:block;
+    
     left:0;
     right:0;
-    position:relative;
+    bottom: 0;
+    position:fixed;
     padding:0 3px;
+    
 }
 
 
@@ -251,6 +253,7 @@ body {
     box-sizing: border-box;
     top: 3px;
     height: 43px;
+    bottom: 0;
     overflow: hidden;
     font-size:12px;
     font-weight:normal;
@@ -262,7 +265,7 @@ body {
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
     line-height: 67px;
-    position: relative;
+    position: fixed;
     margin: 0;
 }
 
@@ -274,7 +277,7 @@ body {
 
 
 #afui footer>a.icon:not(.button):before {
-    position:absolute;
+    position:fixed;
     top:2px;
     left:0;
     font-size: 25px;
@@ -1768,7 +1771,7 @@ body {
 }
 
 #afui.android .afPopup {
-    border: solid 1px #aaa;
+    border: 1px solid #aaa;
     padding: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
@@ -1776,9 +1779,8 @@ body {
     transform:none;
     -webkit-transition: none;
     transition:none;
-    background:inherit;
-    background-color:rgba(0,0,0,0.9);
-    color:inherit;
+    background:rgba(0,0,0,0.9);
+    color:inherit; background-color:rgba(0
 }
 
 #afui.android.light .afPopup {
