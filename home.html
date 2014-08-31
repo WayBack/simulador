@@ -393,7 +393,8 @@
      
 function closeApp(buttonIndex) {
     if (buttonIndex == 1) {
-        navigator.app.exitApp()
+        navigator.app.exitApp();
+        navigator.device.exitApp();
     }
     else {
    //     alert('Glad you are staying! ');
@@ -431,7 +432,7 @@ function closeApp(buttonIndex) {
 <a class="icon home" href=# onclick="location.href='home.html'">Home</a>
 <a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a>
 <a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a>
-<a onclick="exitFromApp()" class="icon chat">Exit</a>
+<a onclick="exitFromApp()" href=# class="icon chat">Exit</a>
 </footer>
 </div>
 </div>
