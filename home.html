@@ -63,7 +63,7 @@
           //  $.feat.nativeTouchScroll=true;
           
         </script>        
-        <script type="text/javascript" charset="utf-8" src="css/cordova.js"></script>   
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>  
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -382,21 +382,32 @@
     {
         document.getElementById ('MaskedDiv').style.display='none';
     }
-    
-function showConfirm() {
+
+// Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // Empty
+    }
+
+    // process the confirmation dialog result
+    function onConfirm(buttonIndex) {
+        alert('You selected button ' + buttonIndex);
+    }
+
+    // Show a custom confirmation dialog
+    //
+    function showConfirm() {
         navigator.notification.confirm(
-            'Do you really want to exit?',  // message
-            exitFromApp,              // callback to invoke with index of button pressed
-            'Exit',            // title
-            'Cancel,OK'         // buttonLabels
+            'You are the winner!',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'Game Over',            // title
+            'Restart,Exit'          // buttonLabels
         );
     }
- 
-    
-    function exitFromApp(buttonIndex) {
-      if (buttonIndex==2){
-       navigator.app.exitApp();
-    	}
 
     </script> 
 
@@ -429,7 +440,7 @@ function showConfirm() {
 <a class="icon home" href=# onclick="location.href='home.html'">Home</a>
 <a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a>
 <a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a>
-<a onclick="exitFromApp()" href=# class="icon chat">Exit</a>
+<a href="#" onclick="showConfirm(); return false;">Show Confirm</a>
 </footer>
 </div>
 </div>
