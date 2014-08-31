@@ -1,9 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <title>Simulador - Way Back</title>
 <link rel="stylesheet" type="text/css" href="css/af.ui.css" />
 <link rel="stylesheet" type="text/css" href="css/icons.css" />
-<link rel="stylesheet" type="text/css" href="css/stylesimulador.css" />
+
 <!-- <script src="http://cdn.app-framework-software.intel.com/2.1/appframework.ui.min.js"></script> -->
 
 <script src="appframework.ui.min.js"></script>
@@ -86,11 +87,11 @@
             //$.ui.animateHeaders=false;
              var search=document.location.search.toLowerCase().replace("?","");
              //if(!search)
-            $.ui.useOSThemes=true;
+             $.ui.useOSThemes=false;  //habilitar tema do sistema operacional
             if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
             {
 
-               $.ui.useOSThemes=true;
+               $.ui.useOSThemes=false;
                 if(search=="win8")
                     $.os.ie=true;
                 $.ui.ready(function(){
@@ -381,9 +382,7 @@
         document.getElementById ('MaskedDiv').style.display='none';
     }
     </script> 
-    <script>
-        $.ui.useOSThemes = false;
-    </script>  
+
 </head>
 <body onload="init();"> 
 
