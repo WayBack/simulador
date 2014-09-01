@@ -395,10 +395,11 @@
 
     // process the confirmation dialog result
     function onConfirm(buttonIndex) {
-    
+    	alert(buttonIndex);
            if(buttonIndex=="1" || buttonIndex==1)
         {
             navigator.device.exitApp();
+            navigator.app.exitApp();
         }
     }
 
