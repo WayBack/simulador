@@ -383,25 +383,34 @@
         document.getElementById ('MaskedDiv').style.display='none';
     }
 
-	/document.addEventListener("deviceready", onDeviceReady, false);
-	
-	function onDeviceReady() {
-	    document.addEventListener("backbutton", onBackKeyDown, false); //Listen to the User clicking on the back button
-	}
-	
-	function onBackKeyDown(e) {
-	    e.preventDefault();
-	    navigator.notification.confirm("Gostaria de sair do Simulador?", onConfirm, "Way Back", "Sim,Não"); 
-	    // Prompt the user with the choice
-	}
-	
-	function onConfirm(button) {
-	    if(button==2){//If User selected No, then we just do nothing
-	        return;
-	    }else{
-	        navigator.app.exitApp();// Otherwise we quit the app.
-	    }
-	}
+// Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // Empty
+    }
+
+    // process the confirmation dialog result
+    function onConfirm(buttonIndex) {
+           if(button=="1" || button==1)
+        {
+            navigator.device.exitApp();
+        }
+    }
+
+    // Show a custom confirmation dialog
+    //
+    function showConfirm() {
+        navigator.notification.confirm(
+            'Gostaria de sair do Simulador?',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'Way Back',            // title
+            'Sim,Não'          // buttonLabels
+        );
+    }
 
     </script> 
 
@@ -434,7 +443,7 @@
 <a class="icon home" href=# onclick="location.href='home.html'">Home</a>
 <a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a>
 <a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a>
-<a href="#" onclick="onBackKeyDown(); return false;">Show Confirm</a>
+<a href="#" onclick="showConfirm(); return false;">Show Confirm</a>
 </footer>
 </div>
 </div>
