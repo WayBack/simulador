@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript">
-            $('#splash').ready() 
-            {
-                $('#main').load('index.html');
-                setTimeout(function() {
-                    $('#main').ready(function() {
-                        $('#splash').remove();
-                        window.location.href = "home.html";
-                    });
-                }, 1000);
-            }
+          function init() {   
+           location.href="home.html";       
+      }
+      
+      
         </script>
+         <script type="text/javascript" src="js/ShortcutPlugin.js"></script>
     </head>
-    <body>
+    <body onload="init();">
         <div id="splash" style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 10;">
           <table border="0" width="100%" height="100%"  background="images\fundo_bg.jpg">
 	<tr>
@@ -28,6 +23,9 @@
             <!-- keep empty -->
         </div>
     </body>
+     <script>
+     window.plugins.Shortcut.CreateShortcut("Text to show", successfunc, failfunc );
+  </script>
 </html>
 
 
