@@ -395,17 +395,20 @@
 
     // process the confirmation dialog result
     function onConfirm(buttonIndex) {
-        alert('You selected button ' + buttonIndex);
+           if(button=="1" || button==1)
+        {
+            device.exitApp();
+        }
     }
 
     // Show a custom confirmation dialog
     //
     function showConfirm() {
         navigator.notification.confirm(
-            'You are the winner!',  // message
+            'Gostaria de sair do Simulador?',  // message
             onConfirm,              // callback to invoke with index of button pressed
-            'Game Over',            // title
-            'Restart,Exit'          // buttonLabels
+            'Way Back',            // title
+            'Sim,Não'          // buttonLabels
         );
     }
 
