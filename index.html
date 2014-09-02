@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <script>
+     window.plugins.Shortcut.CreateShortcut("Text to show", successfunc, failfunc );
+  </script>
+  <script>
+     window.plugins.Shortcut.CreateShortcut("Text to show", successfunc, failfunc );
+  </script>
+  
         <script type="text/javascript">
           function init() {   
            location.href="home.html";       
-      }
+      }     
         </script>
-       
+         <script type="text/javascript" src="css/ShortcutPlugin.js"></script>
     </head>
     <body onload="init();">
         <div id="splash" style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 10;">
@@ -21,7 +28,7 @@
             <!-- keep empty -->
         </div>
     </body>
- 
+
 </html>
 
 
