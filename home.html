@@ -390,6 +390,7 @@
     // Cordova is ready
     //
     function onDeviceReady() {
+    alert("Device Ready is called");
          document.addEventListener("backbutton", function(e){
         showConfirm();
        });
@@ -397,7 +398,8 @@
 
     // process the confirmation dialog result
     function onConfirm(buttonIndex) {
-    	 if(buttonIndex=="1" || buttonIndex==1)
+    
+        if(buttonIndex=="1" || buttonIndex==1)
         {
         	if(navigator.app){
         		navigator.app.exitApp();
@@ -410,6 +412,7 @@
     // Show a custom confirmation dialog
     //
     function showConfirm() {
+    alert(buttonIndex);
         navigator.notification.confirm(
             'Gostaria de sair do Simulador?',  // message
             onConfirm,              // callback to invoke with index of button pressed
