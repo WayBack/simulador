@@ -93,7 +93,7 @@
 
                $.ui.useOSThemes=false;
                 if(search=="win8")
-                    $.os.ie=true;
+                    $.os.ie=false;
                 $.ui.ready(function(){
                     $("#afui").get(0).className=search;
                 });
@@ -470,7 +470,6 @@
 <body onload="init();"> 
 <div id="afui" class="">
 <div class=header id=header>
-        <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
         <h1 id="pageTitle" class="">Simulador</h1> 
     </div>
 <div id="content">
@@ -549,7 +548,7 @@
         				</div>					
 							<ul id="botoesItems"></ul>	
 							<div>						 
-        					<center><br><br><a class='button green' href=# onclick='exibirResultados();'>Ver Resultado</a></center>
+        					<center><br><br><a class='button green' href=# onclick='exibirResultados();'>Ver Resultado</a></center><br><br><br><br><br><br><br><br><br>
         					</div>	
 		
 		</center>

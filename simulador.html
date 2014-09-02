@@ -93,7 +93,7 @@
 
                $.ui.useOSThemes=false;
                 if(search=="win8")
-                    $.os.ie=true;
+                    $.os.ie=false;
                 $.ui.ready(function(){
                     $("#afui").get(0).className=search;
                 });
@@ -327,7 +327,7 @@
 		exibe+="</li>"
 		exibe+="</ul></div><br><br><br>";
 		exibe+="<a class='button green' href=# onclick=calculaResultado();>Calcular</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=# class=button onclick='wayback.webdb.deleteItem(" + UltimoID +");'>Voltar</a>"
-       
+       exibe+="<br><br><br><br><br><br><br><br><br>";
         return exibe;
       }
 
@@ -425,7 +425,7 @@
 	  	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 110.0 : 0.0;
 	 }
 	 
-	document.getElementById('txtPN').value = isNaN(((fator*volume)/vl_hora)/20.0)==true ? 0 : Math.round(((fator*volume)/vl_hora)/20.0) ;
+	document.getElementById('txtPN').value = isNaN(((fator*volume)/vl_hora)/20.0)==true ? 1 : Math.round(((fator*volume)/vl_hora)/20.0) ;
  			
 	}
 	
@@ -564,7 +564,7 @@
                                         self.clearInfinite();
                                         $(self.el).append("");
                                         self.scrollToBottom();
-                                    }, 30000);
+                                    }, 50000);
                                 });
                             });
                             $("#webslider").css("overflow", "none");

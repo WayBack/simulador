@@ -93,7 +93,7 @@
 
                $.ui.useOSThemes=false;
                 if(search=="win8")
-                    $.os.ie=true;
+                    $.os.ie=false;
                 $.ui.ready(function(){
                     $("#afui").get(0).className=search;
                 });
@@ -363,6 +363,7 @@
       	exibe+="<br><br><div><ul class='list inset'><li class=divider>TOTAIS</li>"
       	exibe+="<b><li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>PN's: </td><td align=RIGHT>"+Pa +"</td></tr></table></li>"
 		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Investimento: </td><td align=RIGHT>R$ "+parseFloat(total).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
+		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Desconto: </td><td align=RIGHT>R$ "+parseFloat(Desconto).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
 		exibe+="<li style='background-color:#008000;'><table border=0 width='100%'><tr><td align=center><font color=#FFFfff>Investimento Final: </td><td align=RIGHT><font color=#FFFfff>R$ "+ parseFloat(total_desconto).toFixed(2).replace('.', ',') +"</font></td></tr></table></li>"
       	exibe+="</ul></div>";
 
@@ -607,6 +608,7 @@
         				</div>					
 							<ul id="todoItems"></ul> 	
 							<ul id="todoItems2"></ul> 
+							<br><br><br><br><br><br><br><br><br>
 		 				
 		</center></td>
 	</tr>

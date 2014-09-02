@@ -94,7 +94,7 @@
 
                $.ui.useOSThemes=false;
                 if(search=="win8")
-                    $.os.ie=true;
+                    $.os.ie=false;
                 $.ui.ready(function(){
                     $("#afui").get(0).className=search;
                 });
@@ -341,7 +341,7 @@
         exibe+= ListaProdutos.indexOf('rcnf')==-1 ?"<a href=# class=image onclick=OpenModelPopup('rcnf')><img src=images\\iconRCNF.png class='fa fa-backward'></a>" : "<img src=images\\iconRCNF_desab.png>";
         exibe+="&nbsp;&nbsp;";
         exibe+= ListaProdutos.indexOf('bpo')==-1 ?"<a href=# class=image onclick=OpenModelPopup('bpo')><img src=images\\iconBPO.png class='fa fa-backward'></a>" : "<img src=images\\iconBPO_desab.png>";
-        
+        exibe+="<br><br><br>";
         return exibe;
       }
       

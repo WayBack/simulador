@@ -87,7 +87,7 @@
             //$.ui.animateHeaders=false;
              var search=document.location.search.toLowerCase().replace("?","");
              //if(!search)
-            $.ui.useOSThemes=true;
+            $.ui.useOSThemes=false;
             if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
             {
 
@@ -333,6 +333,7 @@
 		exibe+="</div>  ";
         exibe+="<div class=11u ><center><a href=# onclick=calculaResultado();><img border=0 src=images\\bt_calcular.gif></a></div><div class=11u><a href=# onclick='wayback.webdb.deleteItem(" + UltimoID +");'><img border=0 src=images\\bt_voltar2.gif></a></div>"
         exibe+="</div>";
+        exibe+="<br><br><br><br><br><br><br><br><br>";
         return exibe;
       }
 
@@ -459,7 +460,7 @@
 		var Serasa= document.getElementById('chkSerasa').checked==true ? "SIM" : "NÃO";
 		var VolumeSerasa= parseFloat(document.getElementById('txtVolumeSerasa').value);
 		var Resultado = QtdPN*VolumeTitulo;
-		alert(Resultado);
+		
 		
 		 var dbR = wayback.webdb.db;
         dbR.transaction(function(tx){
@@ -586,7 +587,7 @@
 							<ul id="todoItems"></ul> 	
 		 					<div>						 
         					<center><a class='button green' href=# onclick="location.href='resultados.html'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finalizar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;
-        					<a class=button href=# onclick="location.href='home.html'">Simular novo Produto</a></center>
+        					<a class=button href=# onclick="location.href='home.html'">Simular novo Produto</a></center><br><br><br><br><br><br><br><br><br>
         					</div>
 		</center></td>
 	</tr>
