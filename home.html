@@ -390,22 +390,21 @@
     // Cordova is ready
     //
     function onDeviceReady() {
-        // Empty
+         alert("Device Ready is called");
+   		 document.addEventListener("backbutton", function(e){
+        showConfirm();
+       });
     }
 
     // process the confirmation dialog result
     function onConfirm(buttonIndex) {
-    	alert(buttonIndex);
-           if(buttonIndex=="1" || buttonIndex==1)
+    	 if(buttonIndex=="1" || buttonIndex==1)
         {
         	if(navigator.app){
-        		alert("app");
         		navigator.app.exitApp();
         	}else if(navigator.device){
-        		alert("device");
         		navigator.device.exitApp();
-        	}           
-            
+        	}  
         }
     }
 
