@@ -154,6 +154,7 @@
        var Pa=0;
        var total=0;
        var total_desconto=0;
+       var Desconto=0;
       wayback.webdb = {};
       wayback.webdb.db = null;
       
@@ -242,15 +243,15 @@
       function loadItems(tx, rs) {
       	var rowOutput = "";
       	var rowOutput2 = "";
-      	var Desconto = 0;
+      	
       	  for (var i=0; i < rs.rows.length; i++) {
           rowOutput += renderTodo(rs.rows.item(i));   
           	Pa=Pa+rs.rows.item(i).QtdPN;
 			total=total+rs.rows.item(i).Resultado; 
 			Desconto=rs.rows.item(i).Desconto;
 	    }       			
-		
-		total_desconto=total-(total*(Desconto/100));
+		Desconto=(total*(Desconto/100));
+		total_desconto=total-Desconto;
 		
         rowOutput2 = renderTodo2();
         var todoItems = document.getElementById("todoItems");
@@ -363,7 +364,7 @@
       	exibe+="<br><br><div><ul class='list inset'><li class=divider>TOTAIS</li>"
       	exibe+="<b><li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>PN's: </td><td align=RIGHT>"+Pa +"</td></tr></table></li>"
 		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Investimento: </td><td align=RIGHT>R$ "+parseFloat(total).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
-		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Desconto: </td><td align=RIGHT>R$ "+parseFloat(Desconto).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
+		exibe+="<li style='background-color:#E1F0FF;'><table border=0 width='100%'><tr><td align=center>Desconto: </td><td align=RIGHT>-R$ "+parseFloat(Desconto).toFixed(2).replace('.', ',')+"</td></tr></table></li>"
 		exibe+="<li style='background-color:#008000;'><table border=0 width='100%'><tr><td align=center><font color=#FFFfff>Investimento Final: </td><td align=RIGHT><font color=#FFFfff>R$ "+ parseFloat(total_desconto).toFixed(2).replace('.', ',') +"</font></td></tr></table></li>"
       	exibe+="</ul></div>";
 
