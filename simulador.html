@@ -62,6 +62,7 @@
           //  $.feat.nativeTouchScroll=true;
           
         </script>        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -86,11 +87,11 @@
             //$.ui.animateHeaders=false;
              var search=document.location.search.toLowerCase().replace("?","");
              //if(!search)
-            $.ui.useOSThemes=true;
+            $.ui.useOSThemes=false;
             if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
             {
 
-               $.ui.useOSThemes=true;
+               $.ui.useOSThemes=false;
                 if(search=="win8")
                     $.os.ie=true;
                 $.ui.ready(function(){
@@ -162,6 +163,7 @@
       var wayback = {};
        var UltimoProduto = "";
        var UltimoID=0;
+       var fator= 0.0;
       wayback.webdb = {};
       wayback.webdb.db = null;
       
@@ -388,7 +390,7 @@
     
    function calculaPNs()
 	{
-	  var fator= 0.0;
+	  
 	  var vl_hora= 0.0;
 	  var volume = parseFloat(document.getElementById('txtVolume').value);
 	 if (UltimoProduto =="rec"){
@@ -429,8 +431,8 @@
 	
 	 function calculaResultado()
 	{
-	  var Produto= UltimoProduto;
-	  var Modalidade= document.getElementById('Combo02').value;
+	  	var Produto= UltimoProduto;
+	  	var Modalidade= document.getElementById('Combo02').value;
 		var VolumeTitulo= parseFloat(document.getElementById('txtVolume').value);
 		var Perfil= document.getElementById('Combo03').value;
 		var QtdPN= parseFloat(document.getElementById('txtPN').value);
@@ -445,9 +447,18 @@
 		var VolumeBoleto= parseFloat(document.getElementById('txtVolumeBoleto').value);
 		var Serasa= document.getElementById('chkSerasa').checked==true ? "SIM" : "NÃO";
 		var VolumeSerasa= parseFloat(document.getElementById('txtVolumeSerasa').value);
-		var Resultado = QtdPN*VolumeTitulo;
+		var Resultado = 0;
 		
-		
+		if(Perfil=="Analista"){
+			Resultado = Modalidade=="08 horas"? 26066.67: 30276.67;
+		} else if(Perfil=="Operador"){
+			Resultado = Modalidade=="08 horas"? 7820.00: 9083.00;
+		} else if(Perfil=="Assistente"){
+			Resultado = Modalidade=="08 horas"? 15640.00: 18166.00;
+		} else if(Perfil=="Internacional"){
+			Resultado = Modalidade=="08 horas"? 11295.56: 13119.89;
+		}
+		Resultado = Resultado*QtdPN;
 				
 		 var dbR = wayback.webdb.db;
         dbR.transaction(function(tx){
@@ -458,15 +469,43 @@
         }); 
 	}
 
-    </script>
-  <script>
-        $.ui.useOSThemes = false;
+// Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        document.addEventListener("backbutton", function(e){
+        showConfirm();
+       });
+    }
+    // process the confirmation dialog result
+    function onConfirm(buttonIndex) {    	
+           if(buttonIndex=="1" || buttonIndex==1)
+        {
+        	if(navigator.app){        		
+        		navigator.app.exitApp();
+        	}else if(navigator.device){        		
+        		navigator.device.exitApp();
+        	}                       
+        }
+    }
+
+    // Show a custom confirmation dialog
+    //
+    function showConfirm() {
+        navigator.notification.confirm(
+            'Gostaria de sair do Simulador?',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'Way Back',            // title
+            'Sim,Não'          // buttonLabels
+        );
+    }
     </script>  
 </head>
 <body onload="init();"> 
 <div id="afui" class="">
 <div class=header id=header>
-        <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
         <h1 id="pageTitle" class="">Simulador</h1> 
     </div>
 <div id="content">

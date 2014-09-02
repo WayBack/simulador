@@ -61,7 +61,8 @@
 
           //  $.feat.nativeTouchScroll=true;
           
-        </script>        
+        </script>      
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>  
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -90,9 +91,9 @@
             if(search.length>0) //Android fix has too many buggy issues on iOS - can't preview with $.os.android
             {
 
-               $.ui.useOSThemes=true;
+               $.ui.useOSThemes=false;
                 if(search=="win8")
-                    $.os.ie=true;
+                    $.os.ie=false;
                 $.ui.ready(function(){
                     $("#afui").get(0).className=search;
                 });
@@ -469,15 +470,43 @@
         }); 
 	}
 
-    </script>
-  <script>
-        $.ui.useOSThemes = false;
+   // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        document.addEventListener("backbutton", function(e){
+        showConfirm();
+       });
+    }
+    // process the confirmation dialog result
+    function onConfirm(buttonIndex) {    	
+           if(buttonIndex=="1" || buttonIndex==1)
+        {
+        	if(navigator.app){        		
+        		navigator.app.exitApp();
+        	}else if(navigator.device){        		
+        		navigator.device.exitApp();
+        	}                       
+        }
+    }
+
+    // Show a custom confirmation dialog
+    //
+    function showConfirm() {
+        navigator.notification.confirm(
+            'Gostaria de sair do Simulador?',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'Way Back',            // title
+            'Sim,Não'          // buttonLabels
+        );
+    }
     </script>  
 </head>
 <body onload="init();"> 
 <div id="afui" class="">
 <div class=header id=header>
-        <a id="backButton" href="#" class="button back" style="visibility: visible; ">Back</a>
         <h1 id="pageTitle" class="">Simulador</h1> 
     </div>
 <div id="content">

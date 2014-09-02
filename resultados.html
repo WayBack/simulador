@@ -62,6 +62,7 @@
           //  $.feat.nativeTouchScroll=true;
           
         </script>        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -429,6 +430,39 @@
       function CloseModelPopup()
     {
         document.getElementById ('MaskedDiv').style.display='none';
+    }
+    
+// Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        document.addEventListener("backbutton", function(e){
+        showConfirm();
+       });
+    }
+    // process the confirmation dialog result
+    function onConfirm(buttonIndex) {    	
+           if(buttonIndex=="1" || buttonIndex==1)
+        {
+        	if(navigator.app){        		
+        		navigator.app.exitApp();
+        	}else if(navigator.device){        		
+        		navigator.device.exitApp();
+        	}                       
+        }
+    }
+
+    // Show a custom confirmation dialog
+    //
+    function showConfirm() {
+        navigator.notification.confirm(
+            'Gostaria de sair do Simulador?',  // message
+            onConfirm,              // callback to invoke with index of button pressed
+            'Way Back',            // title
+            'Sim,Não'          // buttonLabels
+        );
     }
     </script> 
    

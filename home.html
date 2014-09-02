@@ -386,7 +386,6 @@
 // Wait for Cordova to load
     //
     document.addEventListener("deviceready", onDeviceReady, false);
-
     // Cordova is ready
     //
     function onDeviceReady() {
@@ -394,20 +393,15 @@
         showConfirm();
        });
     }
-
     // process the confirmation dialog result
-    function onConfirm(buttonIndex) {
-    	
+    function onConfirm(buttonIndex) {    	
            if(buttonIndex=="1" || buttonIndex==1)
         {
-        	if(navigator.app){
-        		
+        	if(navigator.app){        		
         		navigator.app.exitApp();
-        	}else if(navigator.device){
-        		
+        	}else if(navigator.device){        		
         		navigator.device.exitApp();
-        	}           
-            
+        	}                       
         }
     }
 
@@ -421,7 +415,6 @@
             'Sim,Não'          // buttonLabels
         );
     }
-
     </script> 
 
 </head>
@@ -429,7 +422,6 @@
 
 <div id="afui" class="">
 <div class=header id=header>
-        <a id="backButton" href="#" class="button back"></a>
         <h1 id="pageTitle" class="">Simulador</h1> 
     </div>
    
