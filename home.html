@@ -398,8 +398,14 @@
     	alert(buttonIndex);
            if(buttonIndex=="1" || buttonIndex==1)
         {
-            navigator.device.exitApp();
-            navigator.app.exitApp();
+        	if(navigator.app){
+        		alert("app");
+        		navigator.app.exitApp();
+        	}else if(navigator.device){
+        		alert("device");
+        		navigator.device.exitApp();
+        	}           
+            
         }
     }
 
