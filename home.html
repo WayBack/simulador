@@ -62,8 +62,8 @@
 
           //  $.feat.nativeTouchScroll=true;
           
-        </script>
-               
+        </script>        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>  
         <script type="text/javascript" charset="utf-8" src="css/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="css/af.passwordBox.js"></script>          
@@ -390,29 +390,28 @@
     // Cordova is ready
     //
     function onDeviceReady() {
-    alert("Device Ready is called");
-         document.addEventListener("backbutton", function(e){
-        showConfirm();
-       });
+        // Empty
     }
 
     // process the confirmation dialog result
     function onConfirm(buttonIndex) {
-    
-        if(buttonIndex=="1" || buttonIndex==1)
+    	alert(buttonIndex);
+           if(buttonIndex=="1" || buttonIndex==1)
         {
         	if(navigator.app){
+        		alert("app");
         		navigator.app.exitApp();
         	}else if(navigator.device){
+        		alert("device");
         		navigator.device.exitApp();
-        	}  
+        	}           
+            
         }
     }
 
     // Show a custom confirmation dialog
     //
     function showConfirm() {
-    alert(buttonIndex);
         navigator.notification.confirm(
             'Gostaria de sair do Simulador?',  // message
             onConfirm,              // callback to invoke with index of button pressed
@@ -452,7 +451,7 @@
 <a class="icon home" href=# onclick="location.href='home.html'">Home</a>
 <a class="icon database" href=# onclick="wayback.webdb.deleteAllItem(-1)">Resetar Dados</a>
 <a class="icon chat" href=# onclick="location.href='contato.html'">Contato</a>
-<a href="#" onclick="showConfirm(); return false;">Sair</a>
+<a href="#" onclick="showConfirm(); return false;">Show Confirm</a>
 </footer>
 </div>
 </div>
