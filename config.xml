@@ -2,7 +2,7 @@
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:gap = "http://phonegap.com/ns/3.5"
         id        = "com.wayback.simulador"
         version   = "1.0.3">
 
@@ -22,7 +22,18 @@
         permission on your app, which PhoneGap requires.
     -->
     <preference name="permissions"                value="none"/>
-
+ <preference name="phonegap-version" value="3.3.0" />
+    <preference name="orientation" value="#{cfg.phonegap.orientation || "default"}" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="#{!!cfg.phonegap.fullscreen}" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="false" />
+    <preference name="exit-on-suspend" value="#{!!cfg.phonegap.exitOnSuspend}" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="android-minSdkVersion" value="#{cfg.phonegap.androidVersion || 10}" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="permissions" value="#{cfg.phonegap.permissions || "none"}" />
     <!-- Customize your app and platform with the preference element. -->
     <preference name="phonegap-version"           value="3.5.0" />          <!-- all: current version of PhoneGap -->
     <preference name="orientation"                value="default" />        <!-- all: default means both landscape and portrait are enabled -->
@@ -39,7 +50,7 @@
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-minSdkVersion"      value="7" />              <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
-	<preference name="com.plugins.shortcut" 	  value="auto" />
+	<preference name="com.plugins.shortcut" 	  value="true" />
     <!-- Plugins -->
 	
     <!-- Core plugins -->
@@ -65,7 +76,7 @@
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
-   <gap:plugin name="com.plugins.shortcut" version="0.1.1" />
+   <gap:plugin name="com.plugins.shortcut" />
     
     <!--    
         <gap:plugin name="com.phonegap.plugins.barcodescanner" />
