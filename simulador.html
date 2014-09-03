@@ -424,9 +424,9 @@
 	  	fator= 6.30;
 	  	vl_hora= document.getElementById('Combo02').value=="08 horas" ? 110.0 : 0.0;
 	 }
-	 
-	document.getElementById('txtPN').value = isNaN(((fator*volume)/vl_hora)/20.0)==true ? 1 : Math.round(((fator*volume)/vl_hora)/20.0) ;
- 			
+	 var dias = document.getElementById('Combo02').value=="08 horas" ? 20.0 : 22.0;
+		document.getElementById('txtPN').value = isNaN(((fator*volume)/vl_hora)/dias)==true ? 1 : Math.round(((fator*volume)/vl_hora)/dias) ;
+ 		document.getElementById('txtPN').value = document.getElementById('txtPN').value	=="0"? "1":document.getElementById('txtPN').value;	
 	}
 	
 	 function calculaResultado()
@@ -450,15 +450,26 @@
 		var Resultado = 0;
 		
 		if(Perfil=="Analista"){
-			Resultado = Modalidade=="08 horas"? 26066.67: 30276.67;
+			Resultado = Modalidade=="08 horas"? 14700.00: 16950.00;
 		} else if(Perfil=="Operador"){
-			Resultado = Modalidade=="08 horas"? 7820.00: 9083.00;
+			Resultado = Modalidade=="08 horas"? 9800.00: 11300.00;
 		} else if(Perfil=="Assistente"){
-			Resultado = Modalidade=="08 horas"? 15640.00: 18166.00;
+			Resultado = Modalidade=="08 horas"? 12250.00: 14125.00;
 		} else if(Perfil=="Internacional"){
-			Resultado = Modalidade=="08 horas"? 11295.56: 13119.89;
+			Resultado = Modalidade=="08 horas"? 34300.00: 34300.00;
 		}
 		Resultado = Resultado*QtdPN;
+		
+		if(ZeroOito=="SIM"){
+			Resultado = ((((VolumeTitulo==0?1 : VolumeTitulo)*fator)*0.650567)+500)+Resultado ;
+		} 
+		if(Boleto=="SIM"){
+			Resultado = ((VolumeBoleto==0?1 : VolumeBoleto)*1.94867543)+Resultado;
+		}
+		if(Serasa=="SIM"){
+			Resultado = ((VolumeSerasa==0?1 : VolumeSerasa)*20.8947192899)+Resultado;
+		} 
+		
 				
 		 var dbR = wayback.webdb.db;
         dbR.transaction(function(tx){
