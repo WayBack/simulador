@@ -94,7 +94,7 @@
 		<icon src="icon_wb_simulador.png" />
 
     <!-- Define app splash screen for each platform. -->
-		<gap:splash src="res/screen/ios/Default.png" gap:platform="ios" width="320" height="480" />
+	<!--<gap:splash src="res/screen/ios/Default.png" gap:platform="ios" width="320" height="480" />
 		<gap:splash src="res/screen/ios/Default.png" gap:platform="ios" width="480" height="320" />
 		<gap:splash src="res/screen/ios/Default@2x.png" gap:platform="ios" width="640" height="960" />
 		<gap:splash src="res/screen/ios/Default%402x.png" gap:platform="ios" width="960" height="640" />
@@ -112,7 +112,7 @@
 		<gap:splash src="res/screen/blackberry/default.png" gap:platform="blackberry" />
 		<gap:splash src="res/screen/windows-phone/default.png" gap:platform="winphone" />
 		<gap:splash src="splash.png" />
-
+-->
 
     <!--
         Define access to external domains.
