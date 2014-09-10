@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
@@ -45,7 +45,10 @@
     <!-- Plugins -->
 	
     <!-- Core plugins -->
-    
+    	<gap:platform name="ios" />
+		<gap:platform name="android" />
+		<gap:platform name="winphone" />
+		
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
